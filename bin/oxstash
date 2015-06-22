@@ -88,11 +88,6 @@ def main():
         type=int,
         default=500,
         help="How many events to do together in a bulk operation")
-    parser.add_argument('--request_timeout',
-                        action='store',
-                        type=int,
-                        default=10,
-                        help="Read timeout for bulk api")
 
     options = parser.parse_args()
 
@@ -123,7 +118,6 @@ def main():
     action_callback = functools.partial(build_doc, options)
     bulk_streamer = elasticsearch.helpers.streaming_bulk(
         es, out_stream,
-        request_timeout=options.request_timeout,
         chunk_size=options.chunk_size,
         expand_action_callback=action_callback)
 
